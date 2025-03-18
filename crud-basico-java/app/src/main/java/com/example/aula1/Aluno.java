@@ -7,6 +7,7 @@ public class Aluno implements Serializable {
     String nome;
     String CPF;
     String telefone;
+    byte[] fotoBytes;
 
     public Aluno(String nome, String CPF, String telefone) {
         this.nome = nome;
@@ -48,6 +49,14 @@ public class Aluno implements Serializable {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public byte[] getFotoBytes() {
+        return fotoBytes;
+    }
+
+    public void setFotoBytes(byte[] fotoBytes) {
+        this.fotoBytes = fotoBytes;
     }
 
     @Override
