@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
@@ -27,6 +29,8 @@ public class ListarAlunos extends AppCompatActivity {
     private List<Aluno> alunos;
     private List<Aluno> alunosFiltrados = new ArrayList<>();
 
+    private EditText filtrar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,8 @@ public class ListarAlunos extends AppCompatActivity {
         this.alunoDAO = new AlunoDAO(this);
         this.alunos = this.alunoDAO.obterTodos();
         alunosFiltrados.addAll(alunos);
+        filtrar = findViewById(R.id.editTextFilter);
+        Button btnFiltro = findViewById(R.id.buttonFilter);
 
         ArrayAdapter<Aluno> adaptador = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
         listView.setAdapter(adaptador);
@@ -89,6 +95,17 @@ public class ListarAlunos extends AppCompatActivity {
         ArrayAdapter<Aluno> adaptador = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1, alunosFiltrados);
         listView.setAdapter(adaptador);
+    }
+
+    public void filtrarAlunos(View view){
+        String filtro = filtrar.getText().toString();
+        alunosFiltrados = alunoDAO.filtrarAluno(filtro);
+        alunos = alunosFiltrados;
+        System.out.println(alunosFiltrados);
+        System.out.println(alunosFiltrados);
+        ArrayAdapter<Aluno> adaptador = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
+        listView.setAdapter(adaptador);
+        registerForContextMenu(listView);
     }
 
 }

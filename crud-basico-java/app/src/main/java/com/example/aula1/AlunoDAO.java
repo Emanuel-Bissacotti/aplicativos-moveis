@@ -42,6 +42,24 @@ public class AlunoDAO {
         return alunos;
     }
 
+    public List<Aluno> filtrarAluno(String filtro){
+        List<Aluno> alunos = new ArrayList<>();
+        Cursor cursor = banco.query("aluno", new String[]{"id", "nome", "cpf", "telefone", "fotoBytes"},
+                "nome" + " LIKE ?", new String[] { filtro+"%" }, null, null, null,
+                null);
+        while(cursor.moveToNext()){
+            Aluno a = new Aluno();
+            a.setId(cursor.getInt(0));
+            a.setNome(cursor.getString(1));
+            a.setCPF(cursor.getString(2));
+            a.setTelefone(cursor.getString(3));
+            a.setFotoBytes(cursor.getBlob(4));
+            alunos.add(a);
+        }
+        System.out.println(alunos);
+        return alunos;
+    }
+
     public void excluir(Aluno a){
         banco.delete("aluno", "id = ?",new String[]{String.valueOf(a.getId())}); // no lugar do ? vai colocar o id do aluno
     }
