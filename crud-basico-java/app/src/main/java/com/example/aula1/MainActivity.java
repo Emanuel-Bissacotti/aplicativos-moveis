@@ -8,10 +8,12 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.Manifest;
 
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
     private static  final int REQUEST_CAMERA_PERMISSION = 200;
     private ActivityResultLauncher<Intent> cameraLauncher;
+    private TextView txtEndereco;
+    private static final int REQUEST_ENDERECO = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         );
 
         dao = new AlunoDAO(this);
+
+        txtEndereco = findViewById(R.id.txtEndereco);
 
         Intent it = getIntent();
         if(it.hasExtra("aluno")){
@@ -149,6 +155,12 @@ public class MainActivity extends AppCompatActivity {
     public void irParaListar(View view){
         Intent intent = new Intent(this, ListarAlunos.class);
         startActivity(intent);
+    }
+
+    public void irParaEndereco(View view){
+        Log.d("MainActivity", "irParaEndereco method called");
+        Intent intent = new Intent(MainActivity.this, ActivityEndereco.class);
+        startActivityForResult(intent, REQUEST_ENDERECO);
     }
 
     @Override
